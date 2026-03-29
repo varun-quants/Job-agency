@@ -16,6 +16,11 @@ public class FileUtil {
 
     // For reading file from the original file
     public static List<String> readAllLines(String filePath){
+
+        File file = new File(filePath);
+        if(!file.exists()){
+            return new ArrayList<>();
+        }
         List<String> lines = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {

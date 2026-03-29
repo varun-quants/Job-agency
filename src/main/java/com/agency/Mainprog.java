@@ -8,10 +8,25 @@ package com.agency;
  provide a series of reports, for example matching jobs with job-seekers.
 */
 
+
+import com.agency.ui.ConsoleApp;
+import com.agency.util.AppInitialiser;
+
+/**
+ * Application entry point.
+ * Two responsibilities only:
+ *  1.Initialise the environment
+ *  2.Hand control to the console
+ * Nothing else belongs here
+ */
 public class Mainprog {
-    public static void main() {
-        System.out.println("Welcome to the VARUN JOB AGENCY");
-        
+    public static void main(String[] args) {
+        //bootstrap - creates all data files if they do not exist
+        AppInitialiser.initialise();
+        System.out.println();
+        System.out.println();
+
+        //start the console application
+        new ConsoleApp().start();
         }
-    }
 }

@@ -46,6 +46,7 @@ public class AppInitialiser {
      * existing values and leave them untouched.
      */
     private static void seedCountersIfEmpty() {
+        FileUtil.ensureFileExists(COUNTERS_FILE);
         List<String> lines = FileUtil.readAllLines(COUNTERS_FILE);
 
         if(lines.isEmpty()){

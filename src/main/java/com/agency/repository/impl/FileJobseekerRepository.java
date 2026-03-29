@@ -29,6 +29,7 @@ public class FileJobseekerRepository implements JobseekerRepository {
     /**
      * Loads every line from seekers.dat and parses each into a Jobseeker object
      */
+    @Override
     public List<Jobseeker> findAll(){
         List<String> lines = FileUtil.readAllLines(FILE_PATH);
         List<Jobseeker> seekers = new ArrayList<>();
@@ -47,6 +48,7 @@ public class FileJobseekerRepository implements JobseekerRepository {
     /**
      * Stream filters all seekers in memory and returns the first match.
      */
+    @Override
     public Optional<Jobseeker> findById(int id) {
         return findAll().stream()
                 .filter(seeker -> seeker.getId() == id)
@@ -58,4 +60,59 @@ public class FileJobseekerRepository implements JobseekerRepository {
      * then rewrites the entire file.
      * The file is only written once - after all modifications are made.
      */
+    @Override
+    public void update (Jobseeker updatedSeeker) {
+        List<Jobseeker> allSeekers = findAll();
+        List<String> lines = new ArrayList<>();
+
+        for (Jobseeker seeker : allSeekers) {
+            if (seeker.getId() == updatedSeeker.getId()) {
+                lines.add(updatedSeeker.toFileString()); //replace with updated version
+            } else {
+                lines.add(seeker.toFileString()); //keep unchanged
+            }
+        }
+        FileUtil.writeAllLines(FILE_PATH, lines);
+    }
+
+    /**
+     * loads all seekers, skips the one matching the given id,
+     * then rewrites the file without it.
+     * the deleted record simple never gets added to the output list
+     */
+    @Override
+    public void delete(int id){
+        List<Jobseeker> allSeekers = findAll();
+        List<String> lines = new ArrayList<>();
+
+        for(Jobseeker seeker : allSeekers){
+            if(seeker.getId() != id) {
+                lines.add(seeker.toFileString()); //keep everything except deleted
+            }
+        }
+        FileUtil.writeAllLines(FILE_PATH, lines);
+    }
+
+    /**
+     * Delegates entirely to findById()
+     * isPresent() returns true if Optional contains a value - record exists.
+     */
+    @Override
+    public boolean exists(int id) {
+        return findById(id).isPresent();
+    }
+
+    /**
+     * findByName method() - case insensitive
+     */
+    @Override
+    public List<Jobseeker> findByName(String name) {
+        List<Jobseeker> result = new ArrayList<>();
+        for(Jobseeker seeker : findAll()) {
+            if(seeker.getFullName().toLowerCase().contains(name.toLowerCase())) {
+                result.add(seeker);
+            }
+        }
+        return result;
+    }
 }
