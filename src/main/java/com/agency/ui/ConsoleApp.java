@@ -379,7 +379,7 @@ public class ConsoleApp {
                 for(MatchResult r : results){
                     System.out.printf("  %-4d %-20s %-8.1f %s%n",
                             rank++,
-                            r.getJobSeeker().getFullName(),
+                            r.getJobseeker().getFullName(),
                             r.getScore(),
                             r.getMissingSkills().isEmpty() ? "None" :
                             skillNames(r.getMissingSkills()));

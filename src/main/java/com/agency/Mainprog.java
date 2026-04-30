@@ -11,6 +11,8 @@ package com.agency;
 
 import com.agency.ui.ConsoleApp;
 import com.agency.util.AppInitialiser;
+import com.agency.ui.AgencyGUI;
+import javafx.application.Application;
 
 /**
  * Application entry point.
@@ -26,7 +28,9 @@ public class Mainprog {
         System.out.println();
         System.out.println();
 
-        //start the console application
-        new ConsoleApp().start();
+        /*start the console application*/
+        //new ConsoleApp().start();
+
+        Application.launch(AgencyGUI.class, args);
         }
 }

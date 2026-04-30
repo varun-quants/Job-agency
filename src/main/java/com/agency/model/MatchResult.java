@@ -28,7 +28,7 @@ public class MatchResult {
         return job;
     }
 
-    public Jobseeker getJobSeeker() {
+    public Jobseeker getJobseeker() {
         return jobSeeker;
     }
 
